@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pushpendu Mukherjee – Technology Support Leader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --border: #1e2230;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --text: #e8e6e0;
+    --muted: #7a7f91;
+    --accent: #3d8ef0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* GRID LINES */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-name span {
+    display: block;
+    color: var(--gold-light);
+  }
+
+  .hero-title {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #000;
+    border: 1px solid var(--gold);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-meta {
+    position: absolute;
+    bottom: 3rem;
+    right: 4rem;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .hero-meta p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-stat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  /* GLOW ORBS */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: rgba(201,168,76,0.06);
+    top: -100px; right: -100px;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .orb-2 {
+    width: 300px; height: 300px;
+    background: rgba(61,142,240,0.05);
+    bottom: 100px; left: 200px;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    transition: border-color 0.3s;
+  }
+
+  .stat-card:hover { border-color: var(--gold); }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .stat-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-top: 0.25rem;
+  }
+
+  /* SKILLS */
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    background: var(--surface);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .skill-group:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* EXPERIENCE */
+  #experience {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    padding-left: 3rem;
+    padding-bottom: 4rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-role {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .timeline-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .timeline-points li {
+    font-size: 0.92rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .timeline-points li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.8rem;
+  }
+
+  .timeline-points li strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* ACHIEVEMENTS */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .achievement-card {
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+
+  .achievement-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+
+  .achievement-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .achievement-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .achievement-metric {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .achievement-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* TECH STACK */
+  #tech {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tech-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tech-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  /* CERTIFICATIONS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.3s;
+  }
+
+  .cert-item:hover { border-color: var(--gold); }
+
+  .cert-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .cert-name {
+    font-size: 0.88rem;
+    color: var(--text);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+
+  .cert-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .contact-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+  }
+
+  .contact-text em { color: var(--gold); font-style: italic; }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .contact-link-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .contact-link:hover .contact-link-label { color: var(--gold); }
+
+  .contact-link-value { font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-meta { position: static; text-align: left; margin-top: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">PM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Impact</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="hero-inner">
+    <p class="hero-label">Technology Support Leader · Bracknell, UK · Hybrid/Remote across UK &amp; EU</p>
+    <p style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;color:var(--muted);margin-bottom:2rem;text-transform:uppercase;opacity:0;animation:fadeUp 0.8s ease forwards 0.3s;">Target roles: Head of Production Support &nbsp;·&nbsp; Director / VP of Site Reliability &nbsp;·&nbsp; Head of IT Operations</p>
+    <h1 class="hero-name">
+      Pushpendu<br>
+      <span>Mukherjee</span>
+    </h1>
+    <p class="hero-title">Vice President – IT Operations & Application Support<br>
+    Citibank · Previously Infosys · Financial Services Specialist</p>
+    <p class="hero-tagline">"Keeping mission-critical trading and risk platforms stable, observable, and compliant across global markets."</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <p>Years of experience</p>
+    <div class="hero-stat">20+</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Technology Support Leader</strong> with over 20 years of experience in IT service management, production stability, and infrastructure operations within global financial services — including <strong>Citibank, UBS, and DTCC</strong>.</p>
+      <p>I specialise in <strong>incident management, observability, automation, and cloud operations</strong>, with a strong track record of building resilient, compliant, and high-performing systems using SRE and ITIL practices.</p>
+      <p>I thrive at the intersection of technology and business — bridging Development, DevOps, and Infrastructure teams to drive <strong>operational excellence and uptime</strong> for mission-critical applications.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">Years in IT</div>
+        <div class="stat-sublabel">Global Financial Services</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50%</div>
+        <div class="stat-label">Manual Effort Saved</div>
+        <div class="stat-sublabel">Automation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">30%</div>
+        <div class="stat-label">Faster Resolution</div>
+        <div class="stat-sublabel">Process Redesign</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Continents Led</div>
+        <div class="stat-sublabel">Global Coverage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Core Competencies</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-container">
+    <div class="skill-group">
+      <div class="skill-group-title">Operations & Reliability</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Incident Management</span>
+        <span class="skill-tag">Problem Management</span>
+        <span class="skill-tag">SRE</span>
+        <span class="skill-tag">ITIL Framework</span>
+        <span class="skill-tag">Change Management</span>
+        <span class="skill-tag">Production Stability</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Observability & Cloud</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Grafana</span>
+        <span class="skill-tag">Prometheus</span>
+        <span class="skill-tag">Azure</span>
+        <span class="skill-tag">AWS</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Automation & Scripting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Shell Scripting</span>
+        <span class="skill-tag">Unix</span>
+        <span class="skill-tag">Jenkins</span>
+        <span class="skill-tag">PL/SQL</span>
+        <span class="skill-tag">Autosys</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Leadership & Strategy</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Stakeholder Management</span>
+        <span class="skill-tag">SLA Compliance</span>
+        <span class="skill-tag">Onshore/Offshore Teams</span>
+        <span class="skill-tag">DR & BCP</span>
+        <span class="skill-tag">Vendor Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-period">Jan 2022 – Present</div>
+      <div class="timeline-company">Citibank</div>
+      <div class="timeline-role">Vice President – IT Operations & Application Support · Belfast & London, UK</div>
+      <ul class="timeline-points">
+        <li>Lead production stability and incident management for global Markets applications, <strong>sustaining 24x7 uptime</strong> across equities, fixed income, and derivatives platforms serving multiple trading desks across EMEA and North America</li>
+        <li>Monitor and enhance observability using <strong>Grafana and Prometheus</strong>, identifying and resolving performance issues proactively — reducing alert noise by over 40% through smarter threshold tuning</li>
+        <li>Delivered automation programme that <strong>eliminated 50% of manual monitoring and recovery tasks</strong>, freeing team capacity for higher-value engineering work</li>
+        <li>Manage cross-functional collaboration with Application Development, DevOps, and Infrastructure teams to ensure seamless release cycles and zero-surprise deployments</li>
+        <li>Redesigned ITIL-aligned incident and problem management workflows, <strong>cutting mean time to resolution by 30%</strong> and driving measurable improvements in regulatory reporting SLAs</li>
+        <li>Lead disaster recovery (DR) and business continuity (BCP) exercises, achieving full audit compliance across all tested scenarios with zero findings</li>
+        <li>Recognised with <strong>Gold, Silver, Copper, and Platinum awards</strong> — including Gold for leading critical incident recovery of core trading infrastructure within two hours, preventing significant P&amp;L impact</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">Jul 2005 – Dec 2021</div>
+      <div class="timeline-company">Infosys</div>
+      <div class="timeline-role">Application Support Manager / Release Manager · Multiple Locations</div>
+      <ul class="timeline-points">
+        <li>Directed global application and infrastructure support for major financial clients including <strong>UBS and DTCC</strong>, maintaining SLA compliance across mission-critical post-trade and settlement systems</li>
+        <li>Built and deployed automation frameworks using Python, Unix, and Jenkins — <strong>cutting manual operational effort by 50%</strong> and enabling the team to support 30% more application scope without headcount growth</li>
+        <li>Led onshore/offshore support teams across <strong>UK, US, and India</strong>, implementing a follow-the-sun model that eliminated coverage gaps and improved incident response time outside business hours</li>
+        <li>Owned end-to-end change, incident, and problem management lifecycle within the ITIL framework, serving as primary escalation point for P1 incidents across client portfolios</li>
+        <li>Delivered infrastructure upgrades and database migrations across Oracle, Sybase, and DB2 environments with zero production incidents — <strong>achieving 100% successful release record</strong> across a three-year programme</li>
+        <li>Received multiple <strong>Infosys Spot Awards</strong> for leadership in high-stakes incident recovery and automation initiatives recognised across the BFSI practice</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Key Impact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="achievements-grid">
+    <div class="achievement-card">
+      <div class="achievement-icon">⚡</div>
+      <div class="achievement-metric">50%</div>
+      <div class="achievement-desc">Reduction in manual monitoring and recovery tasks through automation initiatives at Citibank</div>
+    </div>
+    <div class="achievement-card">
+      <div class="achievement-icon">🎯</div>
+      <div class="achievement-metric">30%</div>
+      <div class="achievement-desc">Faster incident resolution time through ITIL-aligned process redesign and structured escalation</div>
+    </div>
+    <div class="achievement-card">
+      <div class="achievement-icon">🌐</div>
+      <div class="achievement-metric">3</div>
+      <div class="achievement-desc">Continents managed simultaneously — teams across UK, US, and India ensuring 24x7 coverage</div>
+    </div>
+    <div class="achievement-card">
+      <div class="achievement-icon">🏆</div>
+      <div class="achievement-metric">6+</div>
+      <div class="achievement-desc">Awards received including Citibank Gold for critical trading infrastructure recovery and multiple Infosys Spot Awards</div>
+    </div>
+    <div class="achievement-card">
+      <div class="achievement-icon">💹</div>
+      <div class="achievement-metric">Zero</div>
+      <div class="achievement-desc">Regulatory or audit findings across all DR and BCP exercises — full compliance maintained across Citibank Markets platforms</div>
+    </div>
+    <div class="achievement-card">
+      <div class="achievement-icon">🔒</div>
+      <div class="achievement-metric">24/7</div>
+      <div class="achievement-desc">Uninterrupted production uptime for global Markets trading and risk applications supporting multiple asset classes</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Technologies & Tools</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-grid">
+    <span class="tech-pill">Grafana</span>
+    <span class="tech-pill">Prometheus</span>
+    <span class="tech-pill">ServiceNow</span>
+    <span class="tech-pill">AWS</span>
+    <span class="tech-pill">Azure</span>
+    <span class="tech-pill">Jenkins</span>
+    <span class="tech-pill">Jira</span>
+    <span class="tech-pill">Docker</span>
+    <span class="tech-pill">Kubernetes</span>
+    <span class="tech-pill">Unix</span>
+    <span class="tech-pill">Windows</span>
+    <span class="tech-pill">Python</span>
+    <span class="tech-pill">Shell Scripting</span>
+    <span class="tech-pill">PL/SQL</span>
+    <span class="tech-pill">Oracle</span>
+    <span class="tech-pill">Sybase</span>
+    <span class="tech-pill">Autosys</span>
+    <span class="tech-pill">DataStage</span>
+    <span class="tech-pill">Informatica</span>
+    <span class="tech-pill">SAP Business Objects</span>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Certifications & Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-item">
+      <div class="cert-icon">AZ</div>
+      <div>
+        <div class="cert-name">Microsoft Azure Fundamentals (AZ-900)</div>
+        <div class="cert-year">Microsoft · 2020</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">PM</div>
+      <div>
+        <div class="cert-name">Project Management Certification</div>
+        <div class="cert-year">Infosys · 2019</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">OC</div>
+      <div>
+        <div class="cert-name">Oracle Certification</div>
+        <div class="cert-year">Infosys · 2018</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">UX</div>
+      <div>
+        <div class="cert-name">Unix Certification</div>
+        <div class="cert-year">Infosys · 2017</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">IT</div>
+      <div>
+        <div class="cert-name">ITIL Certification</div>
+        <div class="cert-year">Infosys · 2012</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">DB</div>
+      <div>
+        <div class="cert-name">IBM DB2 Certification</div>
+        <div class="cert-year">IBM · 2005</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">BE</div>
+      <div>
+        <div class="cert-name">B.Tech – Information Technology</div>
+        <div class="cert-year">West Bengal Institute of Technology, Kolkata</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-text">Open to new <em>opportunities</em> and professional conversations.</p>
+      <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8;">Whether you're looking for a seasoned IT Operations leader, want to discuss SRE practices, or explore a potential collaboration — feel free to reach out.</p>
+    </div>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#c9b9bcbaa1b9aca7adbca4bca2a1acbba3acac89aea4a8a0a5e7aaa6a4" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value"><span class="__cf_email__" data-cfemail="acdcd9dfc4dcc9c2c8d9c1d9c7c4c9dec6c9c9eccbc1cdc5c082cfc3c1">[email&#160;protected]</span></span>
+      </a>
+      <a href="tel:+447471184328" class="contact-link">
+        <span class="contact-link-label">Phone</span>
+        <span class="contact-link-value">+44 7471 184328</span>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">View Profile →</span>
+      </a>
+      <div class="contact-link" style="cursor:default;">
+        <span class="contact-link-label">Location</span>
+        <span class="contact-link-value">Bracknell, UK · Hybrid/Remote across UK &amp; EU</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Pushpendu Mukherjee · Technology Support Leader</p>
+  <p>Bracknell, UK · Hybrid/Remote across UK &amp; EU · Available for new opportunities</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal for timeline items
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+  // Smooth active nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.style.color = '';
+      if (link.getAttribute('href') === '#' + current) {
+        link.style.color = 'var(--gold)';
+      }
+    });
+  });
+</script>
+</body>
+</html>
